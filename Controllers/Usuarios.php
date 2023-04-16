@@ -7,7 +7,23 @@ class Usuarios extends Controller{
     }
     public function index()
     {
-        $this->views->getViews($this,"index");
+        $data['cajas'] = $this->model->getCajas();
+        $this->views->getViews($this,"index", $data);
+    }
+    public function listar()
+    {
+        $data = $this->model->getUsuarios();
+        for ($i=0; $i<count($data);$i++){
+            if($data[$i]['estado']==1){
+                $data[$i]['estado']='<span class="badge bg-success">Activo</span>';
+            }else{
+                $data[$i]['estado']='<span class="badge bg-danger">Inactivo</span>';
+            }
+            $data[$i]['acciones']='<div><button class="btn btn-primary" type="button">Editar</button>
+            <button class="btn btn-danger" type="button">Eliminar</button></div>';
+        }
+        echo json_encode($data, JSON_UNESCAPED_UNICODE);
+        die();
     }
     public function validar()
     {
@@ -29,5 +45,30 @@ class Usuarios extends Controller{
         echo json_encode($msg, JSON_UNESCAPED_UNICODE);
         die();
     }
+    public function registrar()
+{
+    $usuario = $_POST['usuario'];
+    $nombre = $_POST['nombre'];
+    $clave = $_POST['clave'];
+    $confirmar = $_POST['confirmar'];
+    $caja = $_POST['caja'];
+    
+    if (empty($usuario) || empty($nombre) || empty($clave) || empty($confirmar) || empty($caja)) {
+        $msg = "Todos los campos son obligatorios";
+    } else if ($clave != $confirmar) {
+        $msg = "Las contraseñas no coinciden";
+    } else {
+        $data = $this->model->registrarUsuario($usuario, $nombre, $clave, $caja);
+        if ($data == "ok") {
+            $msg = "si";
+        } else {
+            $msg = "Error al registrar al usuario";
+        }
+    }
+    
+    header('Content-Type: application/json');
+    echo json_encode($msg, JSON_UNESCAPED_UNICODE);
+    die();
+}
 }
 ?>
