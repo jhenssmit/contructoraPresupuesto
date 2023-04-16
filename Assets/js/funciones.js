@@ -48,7 +48,12 @@ function frmLogin(e)
     }
 }
 function frmUsuario(){
+    document.getElementById("title").innerHTML = "Nuevo Usuario";
+    document.getElementById("btnAction").innerHTML = "Registrar";
+    document.getElementById("claves").classList.remove("d-none");
+    document.getElementById("frmUsuario").reset();
     $("#nuevo_usuario").modal("show");
+    document.getElementById("id").value = "";
 }
 function RegistrarUser(e)
 {
@@ -58,7 +63,7 @@ function RegistrarUser(e)
     const clave = document.getElementById("clave");
     const confirmar = document.getElementById("confirmar");
     const caja = document.getElementById("caja");
-    if(usuario.value=="" || nombre.value=="" || clave.value=="" || caja.value==""){
+    if(usuario.value=="" || nombre.value=="" || caja.value==""){
         Swal.fire({
             position: 'top-end',
             icon: 'error',
@@ -66,43 +71,67 @@ function RegistrarUser(e)
             showConfirmButton: false,
             timer: 3000
           })
-    }else if(clave.value != confirmar.value){
-        Swal.fire({
-            position: 'top-end',
-            icon: 'error',
-            title: 'Las contraseñas no coinciden',
-            showConfirmButton: false,
-            timer: 3000
-          })
-    }else{
+    }else {
         const url = base_url + "Usuarios/registrar";
         const frm = document.getElementById("frmUsuario");
         const http = new XMLHttpRequest();
         http.open("POST", url, true);
         http.send(new FormData(frm));
-        http.onreadystatechange = function(){
-            if(this.readyState == 4 && this.status == 200){
+        http.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
                 const res = JSON.parse(this.responseText);
-                if(res == "si"){
+                if (res == "si") {
                     Swal.fire({
                         position: 'top-end',
                         icon: 'success',
                         title: 'Usuario creado exitosamente',
                         showConfirmButton: false,
                         timer: 3000
-                      })
-                      frm.reset();
-                      $("#nuevo_usuario").modal("hide");
-                }else{
+                    })
+                    frm.reset();
+                    $("#nuevo_usuario").modal("hide");
+                    tblUsuarios.ajax.reload();
+                } else if (res == "modificar") {
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Usuario Modificado exitosamente',
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                    $("#nuevo_usuario").modal("hide");
+                    tblUsuarios.ajax.reload();
+                } else {
                     Swal.fire({
                         position: 'top-end',
                         icon: 'error',
-                        title: 'No se pudo registrar usuario',
+                        title: res,
                         showConfirmButton: false,
                         timer: 3000
-                      })
+                    })
                 }
             }
         }
     }
+    }
+
+function btnEditarUser(id){
+    document.getElementById("title").innerHTML = "Actualizar Usuario";
+    document.getElementById("btnAction").innerHTML = "Modificar";
+        const url = base_url + "Usuarios/editar/"+id;
+        const http = new XMLHttpRequest();
+        http.open("GET", url, true);
+        http.send();
+        http.onreadystatechange = function(){
+            if(this.readyState == 4 && this.status == 200){
+                const res = JSON.parse(this.responseText);
+                console.log(res);
+                document.getElementById("id").value = res.id;
+                document.getElementById("usuario").value = res.usuario;
+                document.getElementById("nombre").value = res.nombre;
+                document.getElementById("caja").value = res.id_caja;
+                document.getElementById("claves").classList.add("d-none");
+                $("#nuevo_usuario").modal("show");
+            }
+        }
 }

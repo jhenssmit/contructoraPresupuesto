@@ -22,7 +22,7 @@ include "Views/Templates/header.php";?>
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="my-modal-title">Nuevo Usuario</h5>
+                <h5 class="modal-title" id="title">Nuevo Usuario</h5>
                 <button class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -31,13 +31,14 @@ include "Views/Templates/header.php";?>
                 <form method="post" id="frmUsuario">
                     <div class="form-group">
                         <label for="usuario">Usuario</label>
+                        <input type="hidden" id="id" name="id">
                         <input id="usuario" class="form-control" type="text" name="usuario" placeholder="Usuario">
                     </div>
                     <div class="form-group">
                         <label for="nombre">nombre</label>
                         <input id="nombre" class="form-control" type="text" name="nombre" placeholder="Nombre del Usuario">
                     </div>
-                    <div class="row">
+                    <div class="row" id="claves">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="clave">Contraseña</label>
@@ -59,7 +60,7 @@ include "Views/Templates/header.php";?>
                                 <?php  } ?>
                         </select>
                     </div><br>
-                    <button class="btn btn-primary" type="button" onclick="RegistrarUser(event);">Registrar</button>
+                    <button class="btn btn-primary" type="button" onclick="RegistrarUser(event);" id="btnAction">Registrar</button>
                 </form>
             </div>
         </div>
