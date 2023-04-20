@@ -1,5 +1,6 @@
 <?php
-class  Query extends Connection{
+class  Query extends Connection
+{
     private $pdo, $con, $sql, $datos;
     public function __construct()
     {
@@ -28,15 +29,12 @@ class  Query extends Connection{
         $this->datos = $datos;
         $insert = $this->con->prepare($this->sql);
         $data = $insert->execute($this->datos);
-        if($data){
+        if ($data) {
             $res = 1;
-        }else{
+        } else {
             $res = 0;
         }
         return $res;
     }
 }
-
-
-
 ?>

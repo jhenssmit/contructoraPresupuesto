@@ -1,16 +1,16 @@
 <?php
-include "Views/Templates/header.php";?>
+include "Views/Templates/header.php"; ?>
 <ol class="breadcrumb mb-4">
     <li class="breadcrumb-item active">Usuarios</li>
 </ol>
-<button class="btn btn-primary mb-2" type="button" onclick="frmUsuario();">Nuevo</button>
+<button class="btn btn-primary mb-2" type="button" onclick="frmUsuario();"><i class="fas fa-plus"></i></button>
 <table class="table table-light" id="tblUsuarios">
     <thead class="thead-dark">
         <tr>
             <th>ID</th>
             <th>Usuario</th>
             <th>Nombre</th>
-            <th>Caja</th>
+            <th>Rol</th>
             <th>Estado</th>
             <th></th>
         </tr>
@@ -21,11 +21,10 @@ include "Views/Templates/header.php";?>
 <div id="nuevo_usuario" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="my-modal-title" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="title">Nuevo Usuario</h5>
-                <button class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+            <div class="modal-header bg-primary">
+                <h5 class="modal-title text-white" id="title">Nuevo Usuario</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
             </div>
             <div class="modal-body">
                 <form method="post" id="frmUsuario">
@@ -53,19 +52,19 @@ include "Views/Templates/header.php";?>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="caja">Caja</label>
-                        <select id="caja" class="form-control" name="caja">
-                            <?php foreach($data['cajas'] as $row){?>
-                                <option value="<?php echo $row['id']; ?>"><?php echo $row['caja']; ?></option>
-                                <?php  } ?>
+                        <label for="rol">Rol</label>
+                        <select id="rol" class="form-control" name="rol">
+                            <?php foreach ($data['rol'] as $row) { ?>
+                                <option value="<?php echo $row['id']; ?>"><?php echo $row['rol']; ?></option>
+                            <?php  } ?>
                         </select>
                     </div><br>
                     <button class="btn btn-primary" type="button" onclick="RegistrarUser(event);" id="btnAction">Registrar</button>
+                    <button class="btn btn-danger" type="button" data-bs-dismiss="modal">Cancelar</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
-<?php include "Views/Templates/footer.php";?>
 
-
+<?php include "Views/Templates/footer.php"; ?>

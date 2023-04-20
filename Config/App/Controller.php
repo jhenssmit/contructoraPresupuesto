@@ -1,5 +1,6 @@
 <?php
-class Controller{
+class Controller
+{
     protected $model;
     protected $views;
     public function __construct()
@@ -9,15 +10,12 @@ class Controller{
     }
     public function cargarModel()
     {
-        $model = get_class($this)."Model";
-        $ruta = "Models/".$model.".php";
-        if(file_exists($ruta)){
+        $model = get_class($this) . "Model";
+        $ruta = "Models/" . $model . ".php";
+        if (file_exists($ruta)) {
             require_once $ruta;
             $this->model = new $model();
         }
     }
 }
-
-
-
 ?>
