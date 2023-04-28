@@ -29,13 +29,22 @@ include "Views/Templates/header.php"; ?>
             <div class="modal-body">
                 <form method="post" id="frmUsuario">
                     <div class="form-group">
+                    <div class="form-group">
+                        <label for="nombre">Nombre</label>
+                        <input id="nombre" class="form-control" type="text" name="nombre" placeholder="Nombre del Usuario">
+                    </div>
+                    <div class="form-group">
+                        <label for="rol">Rol</label>
+                        <select id="rol" class="form-control" name="rol">
+                            <?php foreach ($data['rol'] as $row) { ?>
+                                <option value="<?php echo $row['id']; ?>"><?php echo $row['rol']; ?></option>
+                            <?php  } ?>
+                        </select>
+                    </div><br>
+                        <h6 class="modal-title text-dark">Credenciales:</h6>
                         <label for="usuario">Usuario</label>
                         <input type="hidden" id="id" name="id">
                         <input id="usuario" class="form-control" type="text" name="usuario" placeholder="Usuario">
-                    </div>
-                    <div class="form-group">
-                        <label for="nombre">nombre</label>
-                        <input id="nombre" class="form-control" type="text" name="nombre" placeholder="Nombre del Usuario">
                     </div>
                     <div class="row" id="claves">
                         <div class="col-md-6">
@@ -50,15 +59,8 @@ include "Views/Templates/header.php"; ?>
                                 <input id="confirmar" class="form-control" type="password" name="confirmar" placeholder="Confirmar Contraseña">
                             </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="rol">Rol</label>
-                        <select id="rol" class="form-control" name="rol">
-                            <?php foreach ($data['rol'] as $row) { ?>
-                                <option value="<?php echo $row['id']; ?>"><?php echo $row['rol']; ?></option>
-                            <?php  } ?>
-                        </select>
                     </div><br>
+                    
                     <button class="btn btn-primary" type="button" onclick="RegistrarUser(event);" id="btnAction">Registrar</button>
                     <button class="btn btn-danger" type="button" data-bs-dismiss="modal">Cancelar</button>
                 </form>

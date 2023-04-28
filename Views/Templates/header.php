@@ -46,8 +46,9 @@
                         </a>
                         <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="<?php echo base_url; ?>Usuarios"><div class="sb-nav-link-icon"><i class="fas fa-user"></i></div> Usuarios</a>
-                                <a class="nav-link" href="layout-sidenav-light.html"><div class="sb-nav-link-icon"><i class="fas fa-user-tie"></i></div> Roles</a>
+                                <a class="nav-link" href="<?php echo base_url; ?>Usuarios"><div class="sb-nav-link-icon"><i class="fas fa-user text-primary"></i></div> Usuarios</a>
+                                <a class="nav-link" href="layout-sidenav-light.html"><div class="sb-nav-link-icon"><i class="fas fa-user-tie text-primary"></i></div> Roles</a>
+                                <a class="nav-link" href="<?php echo base_url; ?>Materiales"><div class="sb-nav-link-icon"><i class="fas fa-hard-hat text-primary"></i></div> Materiales</a>
                             </nav>
                         </div>
 

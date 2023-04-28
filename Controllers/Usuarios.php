@@ -4,14 +4,15 @@ class Usuarios extends Controller
     public function __construct()
     {
         session_start();
-        if (empty($_SESSION['activo'])) {
-            header("location: ".base_url);
-        }
+        
         parent::__construct();
     }
     public function index()
     {
-        $data['rol'] = $this->model->getroles();
+        if (empty($_SESSION['activo'])) {
+            header("location: ".base_url);
+        }
+        $data['rol'] = $this->model->getRoles();
         $this->views->getViews($this, "index", $data);
     }
     public function listar()
@@ -20,12 +21,13 @@ class Usuarios extends Controller
         for ($i = 0; $i < count($data); $i++) {
             if ($data[$i]['estado'] == 1) {
                 $data[$i]['estado'] = '<span class="badge bg-success">Activo</span>';
+                $data[$i]['acciones'] = '<div><button class="btn btn-primary" type="button" onclick="btnEditarUser(' . $data[$i]['id'] . ');"><i class="fas fa-edit"></i></button>
+                <button class="btn btn-danger" type="button" onclick="btnEliminarUser(' . $data[$i]['id'] . ');"><i class="fas fa-ban"></i></button></div>';
             } else {
                 $data[$i]['estado'] = '<span class="badge bg-danger">Inactivo</span>';
+                $data[$i]['acciones'] = '<button class="btn btn-success" type="button" onclick="btnReingresarUser(' . $data[$i]['id'] . ');"><i class="fas fa-check"></i></button></div>';
             }
-            $data[$i]['acciones'] = '<div><button class="btn btn-primary" type="button" onclick="btnEditarUser(' . $data[$i]['id'] . ');"><i class="fas fa-edit"></i></button>
-            <button class="btn btn-danger" type="button" onclick="btnEliminarUser(' . $data[$i]['id'] . ');"><i class="fas fa-ban"></i></button>
-            <button class="btn btn-success" type="button" onclick="btnReingresarUser(' . $data[$i]['id'] . ');"><i class="fas fa-check"></i></button></div>';
+
         }
         echo json_encode($data, JSON_UNESCAPED_UNICODE);
         die();
