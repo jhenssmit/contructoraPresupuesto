@@ -5,10 +5,15 @@ function frmLogin(e) {
     if (usuario.value == "") {
         clave.classList.remove("is-invalid");
         usuario.classList.add("is-invalid");
+        document.getElementById("alerta").classList.remove("d-none");
+        document.getElementById("alerta").innerHTML = 'Ingrese su usuario';
+
         usuario.focus();
     } else if (clave.value == "") {
         usuario.classList.remove("is-invalid");
         clave.classList.add("is-invalid")
+        document.getElementById("alerta").classList.remove("d-none");
+        document.getElementById("alerta").innerHTML = 'Ingrese su contraseña';
         clave.focus();
     } else {
         const url = base_url + "Usuarios/validar";
@@ -20,7 +25,7 @@ function frmLogin(e) {
             if (this.readyState == 4 && this.status == 200) {
                 const res = JSON.parse(this.responseText);
                 if (res == "ok") {
-                    window.location = base_url + "Usuarios";
+                    window.location = base_url + "Inicio";
                 } else {
                     document.getElementById("alerta").classList.remove("d-none");
                     document.getElementById("alerta").innerHTML = res;

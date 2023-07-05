@@ -8,13 +8,19 @@ class UsuariosModel extends Query
     }
     public function getUsuario(string $usuario, string $clave)
     {
-        $sql = "SELECT * FROM usuarios where usuario = '$usuario' and clave = '$clave'";
+        $sql = "SELECT * FROM usuarios where usuario = '$usuario' and clave = '$clave' and estado = 1";
         $data = $this->select($sql);
         return $data;
     }
     public function getUsuarios()
     {
         $sql = "SELECT u.*, c.id as id_rol, c.rol FROM usuarios u INNER JOIN roles c WHERE u.id_rol = c.id";
+        $data = $this->selectAll($sql);
+        return $data;
+    }
+    public function getUsuari()
+    {
+        $sql = "SELECT * FROM usuarios WHERE id = 1";
         $data = $this->selectAll($sql);
         return $data;
     }
@@ -77,6 +83,49 @@ class UsuariosModel extends Query
         $data = $this->save($sql, $datos);
         return $data;
     } 
+    public function getPermisos()
+    {
+        $sql = "SELECT * FROM permisos";
+        $data = $this->selectAll($sql);
+        return $data;
+    }
+    public function registrarPermisos(int $id_user, int $id_permiso)
+    {
+        $sql = "INSERT INTO detalle_permisos (id_usuario, id_permiso) VALUES (?,?)";
+        $datos = array($id_user, $id_permiso);
+        $data = $this->save($sql, $datos);
+        if ($data == 1){
+            $res = 'ok';
+        }else{
+            $res = 'error';
+        }
+        return $res;
+    }
+    public function eliminarPermisos(int $id_user)
+    {
+        $sql = "DELETE FROM detalle_permisos WHERE id_usuario = ?";
+        $datos = array($id_user);
+        $data = $this->save($sql, $datos);
+        if ($data == 1){
+            $res = 'ok';
+        }else{
+            $res = 'error';
+        }
+        return $res;
+    }
+    public function getDetallePermisos(int $id_user)
+    {
+        $sql = "SELECT * FROM detalle_permisos WHERE id_usuario = $id_user";
+        $data = $this->selectAll($sql);
+        return $data;
+    }
+   
+    public function verificarPermiso(int $id_user, string $nombre)
+    {
+        $sql ="SELECT p.id, p.permiso, d.id, d.id_usuario, d.id_permiso FROM permisos p INNER JOIN detalle_permisos d ON p.id = d.id_permiso WHERE d.id_usuario = $id_user  AND p.permiso = '$nombre'";
+        $data = $this->selectAll($sql);
+        return $data;
+    }
     
 }
 ?>
